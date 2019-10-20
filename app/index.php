@@ -16,6 +16,14 @@
 
   <!-- CUSTOM -->
   <style>
+  .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px; /* Set the fixed height of the footer here */
+    line-height: 60px; /* Vertically center the text there */
+    background-color: #f5f5f5;
+  }
   .progress {
     background-color: #fff;
     -webkit-box-shadow: none;
@@ -76,11 +84,11 @@
  <h1 class="mt-5">&nbsp;</h1>
   <div class="row">
     <div class="col-sm-8 jumbotron">
-      <b>Current</b><br><br>
-      <h3 class="display-6">22:00-22:30</h3><br>
-      <h1 class="display-3">Foo Bar & Lorem Ipsum</h1><br>
+      <div class="badge badge-primary text-wrap" style="width: 6rem;"><b>CURRENT</b></div><br><br>
+      <h3 class="display-6" id="timeSpanMain"></h3><br>
+      <h1 class="display-3" id="currentDJ"></h1><br>
 
-      <h3 class="display-6">5 min left</h3>
+      <h3 class="display-6" id="timeLeftMinutes"></h3>
       <hr class="my-4">
       <p class="lead">
       Current Time:<tab1 id="currentTime"></tab1><br>
@@ -95,7 +103,7 @@
     </div>
     <div class="col-sm-4 jumbotron bg-light">
       <div class="col">
-        <b>Next</b><br><br>
+        <div class="badge badge-info text-wrap" style="width: 6rem;"><b>NEXT</b></div><br><br>
         <h4>22:30 - 23:00</h4>
         <h2>Alice & Ipsum</h2><br>
         <p class="lead" id="motd">
@@ -103,7 +111,7 @@
         </p>
     <hr class="my-4">
 
-       <b>Upcomming</b><br><br>
+      <div class="badge badge-secondary text-wrap" style="width: 6rem;"><b>UPCOMING</b></div><br><br>
        <div class="col">
         22:30 - 23:00&nbsp;&nbsp;&nbsp;&nbsp;Foo<br>
         23:00 - 23:30&nbsp;&nbsp;&nbsp;&nbsp;Bar<br>
@@ -117,37 +125,36 @@
   </div>
 </div>
 
+ DEV TIME TOOLS
+<form>
+  Time: <input type="time" name="devBTN"><br>
+  Past midnight: <input type="checkbox" name="midnightDev"><br>
+  <br><input type="submit"> 
+</form>
+
+
+
+
   </main>
+
+<footer class="footer">
+  <div class="container">
+    <span class="text-muted">Message from Members:</span>
+  </div>
+</footer>
 
 <?php
 
-$currentDate = "2019-10-21";
-$currentTime = new DateTime($currentDate . "00:11:00");
 
-function main($currentTime){
-    /**
-    * Main function
-    *
-    * @param object $currentTime 
-    */
-
-  echoTimes($currentTime,"currentTime");
-  echoTimes(new DateTime("00:05:00"),"elapsedTime");
-  echoTimes(new DateTime("00:20:00"),"remainingTime");
-
-  $timeElapse = "1571576400";
-  $timeTotal = "1771274120";
-  echoProgress($timeElapse,$timeTotal);
-}
 
 function echoTimes($currentTime,$currentTimeId){
-    /**
-    * Echo current, elapsed, and remaining time.
-    * Uses getElementById to write info
-    *
-    * @param object $currentTime 
-    * @param object $currentTimeId
-    */
+  /**
+  * Echo current, elapsed, and remaining time.
+  * Uses getElementById to write info
+  *
+  * @param object $currentTime 
+  * @param object $currentTimeId
+  */
 
   echo '<script>
   document.getElementById("' . $currentTimeId . '").innerHTML = "' . $currentTime->format("H:i") . '";
@@ -155,52 +162,245 @@ function echoTimes($currentTime,$currentTimeId){
 }
 
 function echoProgress($timeElapse,$timeTotal){
-    /**
-    * Echo current process (based on time elapsed.
-    */
-    //echo $timeElapse;
-    //echo $timeTotal;
-    echo "<br>";
+  /**
+  * Echo current process (based on time elapsed.
+  */
 
-    $progressPercentage = round(100*intval($timeElapse)/intval($timeTotal));
+  $progressPercentage = round(100*intval($timeElapse)/intval($timeTotal));
 
-
-    echo $progress;
-    $progressPercentage = 70;
-
-    if (("0" < $progressPercentage) && ($progressPercentage <= "40")){
-      $progressClass = "progress-bar-striped progress-bar-animated";
-      $motd = "You have plenty time left";
-    } elseif (("40" < $progressPercentage) && ($progressPercentage <= "70")){
-      $progressClass = "bg-warning progress-bar-striped progress-bar-animated";
-      $motd = "Get ready, your turn soon!";
-     } elseif (("70" < $progressPercentage) && ($progressPercentage <= "90")){
-      $progressClass = "bg-danger progress-bar-striped progress-bar-animated";
-      $motd = "Go upstaris and get ready for your turn!";
-    } elseif (("90" < $progressPercentage) && ($progressPercentage <= "100")){
-      $progressClass = "bg-danger ";
-      $motd = "You're time begins now!";
-      echo '<script> var element = document.getElementById("flash");element.classList.toggle("warning");</script>';
-
-    }
-
+  if ($progressPercentage == 0.0) {
+    $progressPercentage = 0;
+  }
 
  
-    $progressBar = '<div class=\"progress-bar ' . $progressClass . '\" role=\"progressbar\" style=\"width: ' . $progressPercentage . '%\" aria-valuenow=\"' . $progressPercentage . '\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>';
+
+  //DEV
+  // $progressPercentage = 70;
+  // DEV
+
+  if (("0" < $progressPercentage) && ($progressPercentage <= "40")){
+    $progressClass = "progress-bar-striped progress-bar-animated";
+    $motd = "You have plenty time left";
+  } elseif (("40" < $progressPercentage) && ($progressPercentage <= "70")){
+    $progressClass = "bg-warning progress-bar-striped progress-bar-animated";
+    $motd = "Get ready, your turn soon!";
+  } elseif (("70" < $progressPercentage) && ($progressPercentage <= "90")){
+    $progressClass = "bg-danger progress-bar-striped progress-bar-animated";
+    $motd = "Go upstaris and get ready for your turn!";
+  } elseif (("90" < $progressPercentage) && ($progressPercentage <= "100")){
+    $progressClass = "bg-danger ";
+    $motd = "You're time begins now!";
+    echo '<script> var element = document.getElementById("flash");element.classList.toggle("warning");</script>';
+  }
+
+  $progressBar = '<div class=\"progress-bar ' . $progressClass . '\" role=\"progressbar\" style=\"width: ' . $progressPercentage . '%\" aria-valuenow=\"' . $progressPercentage . '\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>';
+
+  echo '<script>document.getElementById("progressBar").innerHTML = "' . $progressBar . '" ;</script>';
+  echo '<script>document.getElementById("motd").innerHTML = "' . $motd . '" ;</script>';
+}
 
 
-    echo '<script>document.getElementById("progressBar").innerHTML = "' . $progressBar . '" ;</script>';
-    
-    echo '<script>document.getElementById("motd").innerHTML = "' . $motd . '" ;</script>';
+
+function getDJs(){
+  /**
+  * Reads CSV-fils
+  * @return array Array with each DJ
+  *
+  * Each line contains the name of the DJ, the start time, and the end time.
+  * 
+  * Example:
+  *   Name,Start,End
+  *   Foo,22:00,22:30
+  *   Bar,22:30,23:00
+  *   Lorem,23:00,23:30
+  *   Ipsum,23:30,00:00
+  *   Alice,00:00,00:30
+  *   Bob,00:30,01:00
+  * 
+  * N.B. Assumes the event is <24h
+  * Uses COMMA as a seperator
+
+  */
+
+  $djs = array();
+  $filePath = "times.csv";
+
+  if (($handle = fopen($filePath, "r")) !== FALSE) {
+    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+
+      // DEV
+      //$currentDate = "2019-10-20";
+      global $currentDate;
+      $openingHour = "22";
+      $closingHour = "03";
+      // DEV
 
 
+      $currentStartHour = substr($data[1],0,2);
+      $currentEndHour = substr($data[2],0,2);
+
+      // First line is a header
+      if (is_numeric($currentStartHour) !== True) {
+        continue;
+      }
+
+      // Check if date is past midnight
+      if ($currentStartHour < $closingHour){
+        $currentDate = date('Y-m-d', strtotime($currentDate . ' + 1 days'));
+      }
+
+      // Converts time to UNIX timestamps based on the current date
+      $start = strtotime($currentDate . " " . $data[1] . ":00");
+
+      // === DEV ===
+      // NEED A CHECK IF END TIME IS PAST MIDNIGHT 
+      if ($currentEndHour < $closingHour){
+        $currentDate = date('Y-m-d', strtotime($currentDate . ' + 1 days'));
+      }
+      $end = strtotime($currentDate . " " . $data[2] . ":00");
+
+      // Each item is a different DJ
+      array_push($djs,
+        $array = array(
+          "name" => $data[0],
+          "date" => $currentDate,
+          "startTime" => $data[1],
+          "startTimeUnix" => $start,
+          "endTime" => $data[2],
+          "endTimeUnix" => $end,
+        )
+      );
+    }
+    fclose($handle);
+    return $djs;
+  }
+
+}
+
+function getCurrentDJ($djs){
+
+  global $currentDate;
+  global $currentTime;
+
+  $djFound == false;
+
+  $djsRemain = array();
+  $currentTimeUnix = $currentTime->getTimestamp();
+  foreach($djs as $dj) {
+    if ($dj["endTimeUnix"]<$currentTimeUnix){
+      continue;
+    }
+
+    // WRONG
+    /*
+    if ($dj["endTimeUnix"]<$currentTimeUnix){
+      continue;
+    }
+    */
+    // WRONG
+
+
+    if ($djFound == false){
+      $timeElapse =  intval($currentTimeUnix) - intval($dj["startTimeUnix"]);
+      $timeRemain = intval($dj["endTimeUnix"]) - intval($currentTimeUnix);
+
+
+      $timeRemainMinutes = new DateTime();
+      $timeRemainMinutes->setTimestamp($timeRemain);
+      $timeRemainMinutes = $timeRemainMinutes->format("i");
+      if (substr($timeRemainMinutes,0,1) == "0"){
+        $timeRemainMinutes = substr($timeRemainMinutes,1,2);
+      }
+
+      $timeTotal = $timeElapse + $timeRemain;
+      echo $dj["name"] . ": ".$dj["startTime"] . " - " . $dj["endTime"] . '<br>';
+
+      $djFound = true;
+      $dj["timeElapse"] = $timeElapse;
+      $dj["timeRemain"] = $timeRemain;
+      $dj["timeRemainMinutes"] = $timeRemainMinutes;
+      $dj["timeTotal"] = $timeTotal;
+
+      return $dj;
+
+    } else {
+        array_push($djsRemain,$dj);
+    }
+  }
+}
+
+function formatUnixInteger($unixTime){
+  $time = new DateTime();
+  $time->setTimestamp($unixTime);
+  $time = $time->format("H:i");
+  return $time;
+}
+
+function echoTimeSpan($start,$end,$timeSpanId){
+  /**
+  * Echo current, elapsed, and remaining time.
+  * Uses getElementById to write info
+  *
+  * @param object $currentTime 
+  * @param object $currentTimeId
+  */
+
+  echo '<script>document.getElementById("' . $timeSpanId . '").innerHTML = "' . $start . ' - ' . $end . '" ;</script>';
+}
+
+function main($currentTime){
+  /**
+  * Main function
+  *
+  * @param object $currentTime 
+  */ 
+
+
+  $djs = getDJs();
+  $currentDJ = getCurrentDJ($djs);
+  $timeElapseUnix = $currentDJ["timeElapse"]; // INT
+  $timeRemainUnix = $currentDJ["timeRemain"]; // INT
+  $timeTotalUnix = $currentDJ["timeTotal"];
+  
+
+  $timeElapse = formatUnixInteger($timeElapseUnix);
+  $timeRemain = formatUnixInteger($timeRemainUnix);
+
+  echoTimes($currentTime,"currentTime");
+  echoTimes(new DateTime($timeElapse.":00"),"elapsedTime");
+  echoTimes(new DateTime($timeRemain.":00"),"remainingTime");
+  echoTimeSpan($currentDJ["startTime"],$currentDJ["endTime"],"timeSpanMain");
+
+
+  echoProgress($timeElapseUnix,$timeTotalUnix);
+
+
+  echo '<script>document.getElementById("timeLeftMinutes").innerHTML = "' . $currentDJ["timeRemainMinutes"] . ' min left" ;</script>';
+
+  echo '<script>document.getElementById("currentDJ").innerHTML = "' . $currentDJ["name"] . '" ;</script>';
 
 
 }
 
 
-main($currentTime);
 
+$currentDate = "2019-10-20";
+
+if(!empty($_GET)){
+  $devTime = $_GET["devBTN"];
+
+  if ($_GET['midnightDev'] == 'on'){
+    $nextDay = date('Y-m-d', strtotime($currentDate . ' + 1 days'));
+    echo "MIDNIGHT";
+    $currentTime = new DateTime($currentDate . $_GET["devBTN"].":00");
+  } else {
+    $currentTime = new DateTime($currentDate . $_GET["devBTN"].":00");
+  }
+} else {
+  $currentTime = new DateTime($currentDate . "22:13:00");
+}
+
+main($currentTime);
 /*
 
 // php -S localhost:9000
