@@ -1,9 +1,13 @@
-<!doctype html>
+<?php
+$page = $_SERVER['PHP_SELF'];
+$sec = "10";
+?>
 
 <!DOCTYPE html>
 <html>
 <head>
   <title>DJ Names</title>
+  <meta http-equiv="refresh" content="<?php echo $sec?>;URL='<?php echo $page?>'">
   <meta name="description" content="DJ Names">
   <meta name="author" content="André MG Wisén">
   <meta charset="UTF-8">
@@ -393,11 +397,9 @@ function getActiveDJs($djs){
 
       // This might be wrong...
       // Errors might occure if it's around midnight
-      echo $currentTimeUnix;
-      echo "<br>";
-      echo $dj["startTimeUnix"];
 
-      echo $currentTime->format('U');
+
+      //echo $currentTime->format('U');
 
 
       $timeElapse =  intval($currentTimeUnix) - intval($dj["startTimeUnix"]);
@@ -521,6 +523,8 @@ function main($currentTime){
   echo '<script>document.getElementById("upcomingDJs").innerHTML = "' . $text . '" ;</script>';
 
 }
+
+
 
 // Set timezone
 date_default_timezone_set('Europe/Stockholm');
