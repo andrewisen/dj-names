@@ -76,7 +76,12 @@
     }
 
     body {
-      padding-top: 3rem;
+      padding-top: 1rem;
+    }
+    @media (max-width: 980px) {
+      body {
+      padding-top: 0;
+      }
     }
 
     /* Primary text */
@@ -285,7 +290,6 @@ function getDJs(){
     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 
       // DEV
-      //$currentDate = "2019-10-20";
       $currentDate = $currentDateORG;
       $openingHour = "22";
       $closingHour = "03";
@@ -301,7 +305,9 @@ function getDJs(){
       }
 
       // Converts time to UNIX timestamps based on the current date
-      $start = strtotime($currentDate . " " . $data[1] . ":00");
+      // $start = strtotime($currentDate . " " . $data[1] . ":00");
+      $start = new dateTime($currentDate . " " . $data[1] . ":00");
+      $start = $start->getTimestamp();
 
 
       // Check if date is past midnight
@@ -314,7 +320,9 @@ function getDJs(){
 
       // Converts time to UNIX timestamps based on the current date
     
-      $end = strtotime($currentDate . " " . $data[2] . ":00");
+      //$end = strtotime($currentDate . " " . $data[2] . ":00");
+      $end = new dateTime($currentDate . " " . $data[2] . ":00");
+      $end = $end->getTimestamp();
 
       // Each item is a different DJ
       array_push($djs,
@@ -385,6 +393,13 @@ function getActiveDJs($djs){
 
       // This might be wrong...
       // Errors might occure if it's around midnight
+      echo $currentTimeUnix;
+      echo "<br>";
+      echo $dj["startTimeUnix"];
+
+      echo $currentTime->format('U');
+
+
       $timeElapse =  intval($currentTimeUnix) - intval($dj["startTimeUnix"]);
       $timeRemain = intval($dj["endTimeUnix"]) - intval($currentTimeUnix);
 
@@ -424,10 +439,8 @@ function getActiveDJs($djs){
 }
 
 function formatUnixInteger($unixTime){
-  $time = new DateTime();
-  // N.B. Might cause problems with timezones
-  $time->setTimestamp($unixTime);
-  $time = $time->format("H:i");
+
+  $time = gmdate("H:i", $unixTime);
   return $time;
 }
 
@@ -510,9 +523,12 @@ function main($currentTime){
 }
 
 // Set timezone
-date_default_timezone_set('UTC');
+date_default_timezone_set('Europe/Stockholm');
 // Set dev date
-$currentDate = "2019-10-21";
+// $currentDate = "2019-10-21";
+
+$currentDate = new DateTime("now");
+$currentDate = $currentDate->format("Y-m-d");
 
 // E.g. ?time=01%3A22&midnight=on
 if(!empty($_GET)){
@@ -526,7 +542,7 @@ if(!empty($_GET)){
     $currentTime = new DateTime($currentDate . $_GET["time"].":00");
   }
 } else {
-  $currentTime = new DateTime("now",new DateTimeZone('Europe/Stockholm'));
+  $currentTime = new DateTime("now");
 }
 
 
