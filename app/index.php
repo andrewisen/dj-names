@@ -84,35 +84,39 @@ $sec = "10";
     }
     @media (max-width: 980px) {
       body {
-      padding-top: 0;
+        padding-top: 0;
+        padding-bottom: 50px;
       }
     }
 
     /* Primary text */
     h1 {
+      /* Time span, e.g. 20:00 - 21:00; */
       font-weight: bold;
       font-size: 1.75rem;
     }
     h2 {
+      /* DJ Name(s) */
       font-weight: bold;
       font-size: 6rem;
     }
     h3 {
+      /* Minutes left */
       font-weight: bold;
       font-size: 1.75rem;
     }
 
     /* Secondary text */
     h4 {
- 
+      /* Time span, e.g. 20:00 - 21:00; */
       font-size: 1.75rem;
     }
     h5 {
-
-      font-size: 1.75rem;
+      /* DJ Name(s) */
+      font-size: 4rem;
     }
     h6 {
-
+      /* MOTD */
       font-size: 1.75rem;
     }
 
