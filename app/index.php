@@ -75,6 +75,10 @@
       animation:         argh-my-eyes 1s infinite;
     }
 
+    body {
+      padding-top: 3rem;
+    }
+
     /* Primary text */
     h1 {
       font-weight: bold;
@@ -107,12 +111,6 @@
 <body>
 
   <main role="main" class="container">
-    <!-- REMOVE SPACE, USE CSS -->
-    <h1 class="mt-5">&nbsp;</h1>
-    <h1 class="mt-5">&nbsp;</h1>
-    <!-- REMOVE SPACE, USE CSS -->
-
-
     <div class="row">
 
       <!-- MAIN JUMBOTRON -->
