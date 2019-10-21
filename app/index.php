@@ -259,7 +259,7 @@ function echoProgress($timeElapse,$timeTotal,$echoMOTD){
   } elseif (("90" < $progressPercentage) && ($progressPercentage <= "100")){
     $progressClass = "bg-danger";
     $progressClass = "warning";
-    $motd = "You're time begins now!";
+    $motd = "Your time begins now!!!";
     //echo '<script> var element = document.getElementById("flash");element.classList.toggle("warning");</script>';
   }
 
