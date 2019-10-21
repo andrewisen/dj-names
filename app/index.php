@@ -17,7 +17,7 @@
   <!-- CUSTOM -->
   <style>
   .footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     height: 60px; /* Set the fixed height of the footer here */
@@ -32,7 +32,7 @@
     tab1 { padding-left: 1em; }
     tab2 { padding-left: 3em; }
     tab3 { padding-left: 2em; }
-    tab4 { padding-left: 16em; }
+    tab4 { padding-left: 1em; }
     tab5 { padding-left: 20em; }
     tab6 { padding-left: 24em; }
     tab7 { padding-left: 28em; }
@@ -49,104 +49,156 @@
     @-webkit-keyframes argh-my-eyes {
     0%   { background-color: #fff; }
     49% { background-color: #fff; }
-    50% { background-color: #000; }
-    99% { background-color: #000; }
+    50% { background-color: #dc3545; }
+    99% { background-color: #dc3545; }
     100% { background-color: #fff; }
     }
     @-moz-keyframes argh-my-eyes {
     0%   { background-color: #fff; }
     49% { background-color: #fff; }
-    50% { background-color: #000; }
-    99% { background-color: #000; }
+    50% { background-color: #dc3545; }
+    99% { background-color: #dc3545; }
     100% { background-color: #fff; }
     }
     @keyframes argh-my-eyes {
     0%   { background-color: #fff; }
     49% { background-color: #fff; }
-    50% { background-color: #000; }
-    99% { background-color: #000; }
+    50% { background-color: #dc3545; }
+    99% { background-color: #dc3545; }
     100% { background-color: #fff; }
     }
     .warning {
-    -webkit-animation: argh-my-eyes 1s infinite;
-    -moz-animation:    argh-my-eyes 1s infinite;
-    animation:         argh-my-eyes 1s infinite;
+      -webkit-animation: argh-my-eyes 1s infinite;
+      -moz-animation:    argh-my-eyes 1s infinite;
+      animation:         argh-my-eyes 1s infinite;
+    }
+    h1 {
+      font-weight: bold;
+      font-size: 1.75rem;
+    }
+    h2 {
+      font-weight: bold;
+      font-size: 6rem;
+    }
+    h3 {
+      font-weight: bold;
+      font-size: 1.75rem;
     }
 
-</style>
+    h4 {
+ 
+      font-size: 1.75rem;
+    }
+    h5 {
+
+      font-size: 1.75rem;
+    }
+    h6 {
+
+      font-size: 1.75rem;
+    }
+
   </style>
 </head>
 <body>
-  <div id="flash">
 
   <main role="main" class="container">
- <h1 class="mt-5">&nbsp;</h1>
- <h1 class="mt-5">&nbsp;</h1>
-  <div class="row">
-    <div class="col-sm-8 jumbotron">
-      <div class="badge badge-primary text-wrap" style="width: 6rem;"><b>CURRENT</b></div><br><br>
-      <h3 class="display-6" id="timeSpanMain"></h3><br>
-      <h1 class="display-3" id="currentDJ"></h1><br>
-
-      <h3 class="display-6" id="timeLeftMinutes"></h3>
-      <hr class="my-4">
-      <p class="lead">
-      Current Time:<tab1 id="currentTime"></tab1><br>
-      Elapsed:<tab2 id="elapsedTime"></tab2><br>
-      Remaining:<tab3 id="remainingTime"></tab3></ul><br>
-      </p>
-        <div class="progress" id="progressBar">
-      </div>
+    <!-- REMOVE SPACE, USE CSS -->
+    <h1 class="mt-5">&nbsp;</h1>
+    <h1 class="mt-5">&nbsp;</h1>
+    <!-- REMOVE SPACE, USE CSS -->
 
 
+    <div class="row">
 
-    </div>
-    <div class="col-sm-4 jumbotron bg-light">
-      <div class="col">
-        <div class="badge badge-info text-wrap" style="width: 6rem;"><b>NEXT</b></div><br><br>
-        <h4>22:30 - 23:00</h4>
-        <h2>Alice & Ipsum</h2><br>
-        <p class="lead" id="motd">
-        Get ready, your turn soon!
+      <!-- MAIN JUMBOTRON -->
+      <div class="col-sm-8 jumbotron">
+        <!-- UPPER PART -->
+        <div class="badge badge-primary text-wrap" style="width: 6rem;">
+            <b>CURRENT</b>
+        </div>
+        
+        <!-- REMOVE SPACE, USE CSS -->
+        <br><br>
+        <!-- REMOVE SPACE, USE CSS -->
+
+        <!--
+        See: https://getbootstrap.com/docs/4.0/content/typography/
+        -->
+
+  
+        <h1 id="timeSpanMain">00:00 - 00:00</h1>
+        <h2 id="currentDJ">Current DJ Name</h1>
+        <h3 id="timeLeftMinutes">X min left</h1>
+
+        
+        <hr class="my-4"> 
+
+        <!-- LOWER PART -->
+        <p class="lead">
+          Current Time:<tab1 id="currentTime">00:00</tab1><br>
+          Elapsed:<tab2 id="elapsedTime">00:00</tab2><br>
+          Remaining:<tab3 id="remainingTime">00:00</tab3></ul><br>
         </p>
-    <hr class="my-4">
-
-      <div class="badge badge-secondary text-wrap" style="width: 6rem;"><b>UPCOMING</b></div><br><br>
-       <div class="col">
-        22:30 - 23:00&nbsp;&nbsp;&nbsp;&nbsp;Foo<br>
-        23:00 - 23:30&nbsp;&nbsp;&nbsp;&nbsp;Bar<br>
-        23:30 - 00:00&nbsp;&nbsp;&nbsp;&nbsp;Lorem<br>
-        00:00 - 00:30&nbsp;&nbsp;&nbsp;&nbsp;Ipsum<br>
-        00:30 - 01:00&nbsp;&nbsp;&nbsp;&nbsp;FuuBar<br>
+        <div class="progress" id="progressBar">
+        </div>
       </div>
 
+      <!-- SECONDARY JUMBOTRON -->
+      <div class="col-sm-4 jumbotron bg-light">
+        <!-- UPPER PART -->
+        <div class="col">
+          <div class="badge badge-info text-wrap" style="width: 6rem;">
+            <b>NEXT</b>
+          </div>
 
+          <!-- REMOVE SPACE, USE CSS -->
+          <br><br>
+          <!-- REMOVE SPACE, USE CSS -->
+
+
+          <h4 id="timeSpanSecondary">00:00 - 00:00</h4>
+          <h5 id="nextDJ">Next DJ Name</h5><br>
+          <h6 class="lead" id="motd"></h6>
+          </p>
+
+          <!-- LOWER PART -->
+          <hr class="my-4">
+          
+          <div class="badge badge-secondary text-wrap" style="width: 6rem;">
+            <b>UPCOMING</b>
+          </div>
+
+          <!-- REMOVE SPACE, USE CSS -->
+          <br><br>
+          <!-- REMOVE SPACE, USE CSS -->
+
+          <div class="col" id="upcomingDJs"></div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
- DEV TIME TOOLS
-<form>
-  Time: <input type="time" name="devBTN"><br>
-  Past midnight: <input type="checkbox" name="midnightDev"><br>
-  <br><input type="submit"> 
-</form>
-
-
-
-
   </main>
 
 <footer class="footer">
   <div class="container">
-    <span class="text-muted">Message from Members:</span>
+    <span class="text-muted"><b>Message from Members: </b>Don't forget to have fun <3</span>
   </div>
 </footer>
 
+<!-- DEV -->
+
+<!--
+DEV TIME TOOLS
+<form>
+  Time: <input type="time" name="time"><br>
+  Past midnight: <input type="checkbox" name="midnight"><br>
+  <br><input type="submit"> 
+</form>
+-->
+
+<!-- DEV -->
+
 <?php
-
-
-
 function echoTimes($currentTime,$currentTimeId){
   /**
   * Echo current, elapsed, and remaining time.
@@ -161,18 +213,19 @@ function echoTimes($currentTime,$currentTimeId){
   </script>';
 }
 
-function echoProgress($timeElapse,$timeTotal){
+function echoProgress($timeElapse,$timeTotal,$echoMOTD){
   /**
   * Echo current process (based on time elapsed.
   */
-
   $progressPercentage = round(100*intval($timeElapse)/intval($timeTotal));
 
   if ($progressPercentage == 0.0) {
     $progressPercentage = 0;
   }
 
- 
+  if ($progressPercentage < 0) {
+    $progressPercentage = $progressPercentage * -1;
+  }
 
   //DEV
   // $progressPercentage = 70;
@@ -188,18 +241,19 @@ function echoProgress($timeElapse,$timeTotal){
     $progressClass = "bg-danger progress-bar-striped progress-bar-animated";
     $motd = "Go upstaris and get ready for your turn!";
   } elseif (("90" < $progressPercentage) && ($progressPercentage <= "100")){
-    $progressClass = "bg-danger ";
+    $progressClass = "bg-danger";
+    $progressClass = "warning";
     $motd = "You're time begins now!";
-    echo '<script> var element = document.getElementById("flash");element.classList.toggle("warning");</script>';
+    //echo '<script> var element = document.getElementById("flash");element.classList.toggle("warning");</script>';
   }
 
   $progressBar = '<div class=\"progress-bar ' . $progressClass . '\" role=\"progressbar\" style=\"width: ' . $progressPercentage . '%\" aria-valuenow=\"' . $progressPercentage . '\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>';
 
   echo '<script>document.getElementById("progressBar").innerHTML = "' . $progressBar . '" ;</script>';
-  echo '<script>document.getElementById("motd").innerHTML = "' . $motd . '" ;</script>';
+  if ($echoMOTD==true){
+    echo '<script>document.getElementById("motd").innerHTML = "' . $motd . '" ;</script>';
+  }
 }
-
-
 
 function getDJs(){
   /**
@@ -224,13 +278,16 @@ function getDJs(){
 
   $djs = array();
   $filePath = "times.csv";
+  global $currentDate;
+  $currentDateORG = $currentDate;
+
 
   if (($handle = fopen($filePath, "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 
       // DEV
       //$currentDate = "2019-10-20";
-      global $currentDate;
+      $currentDate = $currentDateORG;
       $openingHour = "22";
       $closingHour = "03";
       // DEV
@@ -244,19 +301,20 @@ function getDJs(){
         continue;
       }
 
-      // Check if date is past midnight
-      if ($currentStartHour < $closingHour){
-        $currentDate = date('Y-m-d', strtotime($currentDate . ' + 1 days'));
-      }
-
       // Converts time to UNIX timestamps based on the current date
       $start = strtotime($currentDate . " " . $data[1] . ":00");
 
-      // === DEV ===
-      // NEED A CHECK IF END TIME IS PAST MIDNIGHT 
-      if ($currentEndHour < $closingHour){
+
+      // Check if date is past midnight
+      if ($currentStartHour < $closingHour){
+        $currentDate = date('Y-m-d', strtotime($currentDate . ' + 1 days'));
+      } elseif ($currentEndHour < $closingHour){
         $currentDate = date('Y-m-d', strtotime($currentDate . ' + 1 days'));
       }
+
+
+      // Converts time to UNIX timestamps based on the current date
+    
       $end = strtotime($currentDate . " " . $data[2] . ":00");
 
       // Each item is a different DJ
@@ -277,21 +335,41 @@ function getDJs(){
 
 }
 
-function getCurrentDJ($djs){
+function getActiveDJs($djs){
 
-  global $currentDate;
+  //global $currentDate;
   global $currentTime;
 
-  $djFound == false;
+  $djFound = false; // OLD
 
-  $djsRemain = array();
+  $currentDJ_bool = false;
+  $nextDJ_bool = false;
+  $upcomningDJ_bool = false;
+
+  
+  $currentDJ = array();
+  $nextDJ = array();
+  $upcomningDJs = array();
+
   $currentTimeUnix = $currentTime->getTimestamp();
+  // $date->setTimezone(new DateTimeZone('Europe/Stockholm'));
+
+  // CURRENT TIME: 02:14
+  // 01:50-02:15Lisa & Gustaf
+  // 02:15-02:40: bajs och bajs 
+
   foreach($djs as $dj) {
+
+    // CHECK DATE
+    //echo "WORLD CLOCK: ". $currentTime->format("Y-m-d")."<br>";
+    //echo "DJ CLOCK:" . $dj["date"] ."<br>" ;
+
+
     if ($dj["endTimeUnix"]<$currentTimeUnix){
       continue;
     }
 
-    // WRONG
+    // WRONG - Should be ok now???
     /*
     if ($dj["endTimeUnix"]<$currentTimeUnix){
       continue;
@@ -300,10 +378,11 @@ function getCurrentDJ($djs){
     // WRONG
 
 
-    if ($djFound == false){
+    if ($currentDJ_bool == false){
+      $currentDJ_bool = true;
+
       $timeElapse =  intval($currentTimeUnix) - intval($dj["startTimeUnix"]);
       $timeRemain = intval($dj["endTimeUnix"]) - intval($currentTimeUnix);
-
 
       $timeRemainMinutes = new DateTime();
       $timeRemainMinutes->setTimestamp($timeRemain);
@@ -313,20 +392,31 @@ function getCurrentDJ($djs){
       }
 
       $timeTotal = $timeElapse + $timeRemain;
-      echo $dj["name"] . ": ".$dj["startTime"] . " - " . $dj["endTime"] . '<br>';
+  
+      // echo $dj["name"] . ": ".$dj["startTime"] . " - " . $dj["endTime"] . '<br>';
 
-      $djFound = true;
+      
       $dj["timeElapse"] = $timeElapse;
       $dj["timeRemain"] = $timeRemain;
       $dj["timeRemainMinutes"] = $timeRemainMinutes;
       $dj["timeTotal"] = $timeTotal;
 
-      return $dj;
+      $currentDJ = $dj;
 
+    } elseif ($nextDJ_bool == false){
+      $nextDJ_bool = true;
+      $nextDJ = $dj;
     } else {
-        array_push($djsRemain,$dj);
+      array_push($upcomningDJs,$dj);
     }
   }
+  $activeDjs =  array(
+          "currentDJ" => $currentDJ,
+          "nextDJ" => $nextDJ,
+          "upcomingDJs" => $upcomningDJs,
+        );
+  return $activeDjs;
+
 }
 
 function formatUnixInteger($unixTime){
@@ -355,9 +445,22 @@ function main($currentTime){
   * @param object $currentTime 
   */ 
 
-
   $djs = getDJs();
-  $currentDJ = getCurrentDJ($djs);
+  $activeDJs = getActiveDJs($djs);
+  $currentDJ = $activeDJs["currentDJ"];
+  $nextDJ = $activeDJs["nextDJ"];
+  $upcomingDJs = $activeDJs["upcomingDJs"];
+
+  if ($nextDJ["name"]==null){
+    $nextDJ["name"] = "";
+    $echoMOTD=false;
+  } else {
+    echoTimeSpan($nextDJ["startTime"],$nextDJ["endTime"],"timeSpanSecondary");
+    $echoMOTD=true;
+  }
+
+
+  
   $timeElapseUnix = $currentDJ["timeElapse"]; // INT
   $timeRemainUnix = $currentDJ["timeRemain"]; // INT
   $timeTotalUnix = $currentDJ["timeTotal"];
@@ -370,35 +473,56 @@ function main($currentTime){
   echoTimes(new DateTime($timeElapse.":00"),"elapsedTime");
   echoTimes(new DateTime($timeRemain.":00"),"remainingTime");
   echoTimeSpan($currentDJ["startTime"],$currentDJ["endTime"],"timeSpanMain");
+  
 
-
-  echoProgress($timeElapseUnix,$timeTotalUnix);
+  echoProgress($timeElapseUnix,$timeTotalUnix,$echoMOTD);
 
 
   echo '<script>document.getElementById("timeLeftMinutes").innerHTML = "' . $currentDJ["timeRemainMinutes"] . ' min left" ;</script>';
 
   echo '<script>document.getElementById("currentDJ").innerHTML = "' . $currentDJ["name"] . '" ;</script>';
+  echo '<script>document.getElementById("nextDJ").innerHTML = "' . $nextDJ["name"] . '" ;</script>';
 
+  $text = "";
+  $i=0;
+  $displayLimit = "5";
+  foreach($upcomingDJs as $dj){
+    if ($i<$displayLimit){
+        $text = $text . $dj["startTime"] . " - " . $dj["endTime"] . "<tab4>" . $dj["name"] . "</tab4><br>";
+        $i++;
+    } else {
+      $text = $text . "...";
+      break;
+    }
 
+  }
+
+  echo '<script>document.getElementById("upcomingDJs").innerHTML = "' . $text . '" ;</script>';
 }
 
 
 
-$currentDate = "2019-10-20";
+$currentDate = "2019-10-21";
 
 if(!empty($_GET)){
-  $devTime = $_GET["devBTN"];
+  $devTime = $_GET["time"];
 
-  if ($_GET['midnightDev'] == 'on'){
+  if ($_GET['midnight'] == 'on'){
     $nextDay = date('Y-m-d', strtotime($currentDate . ' + 1 days'));
-    echo "MIDNIGHT";
-    $currentTime = new DateTime($currentDate . $_GET["devBTN"].":00");
+    echo "MIDNIGHT" . "<br>";
+    $currentTime = new DateTime($nextDay . $_GET["time"].":00");
   } else {
-    $currentTime = new DateTime($currentDate . $_GET["devBTN"].":00");
+    $currentTime = new DateTime($currentDate . $_GET["time"].":00");
   }
 } else {
   $currentTime = new DateTime($currentDate . "22:13:00");
 }
+
+/*
+echo "<br>";
+echo "CURRENT TIME: ".$currentTime->format("H:i"). "<br>";
+echo "CURRENT DATE: ".$currentTime->format("Y-m-d"). "<br>";
+*/
 
 main($currentTime);
 /*
@@ -454,6 +578,8 @@ if (($handle = fopen("times.csv", "r")) !== FALSE) {
   }
   fclose($handle);
 }
+
+
 
 
 
