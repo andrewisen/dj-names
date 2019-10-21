@@ -12,7 +12,7 @@ Use parameters `time` and/or `midnight` to enter developer mode.
 E.g. `?time=01%3A22&midnight=on`
 
 ## Screenshots
-![Screenshot 01](/screenshot/screenshot-01.png?raw=true)
+![Screenshot 01](/screenshots/screenshot-01.png?raw=true)
 
 ## TODO
 
