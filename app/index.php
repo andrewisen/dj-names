@@ -46,6 +46,8 @@
     tab15 { padding-left: 60em; }
     tab16 { padding-left: 64em; }
 
+    /* Flashing progress bar */
+
     @-webkit-keyframes argh-my-eyes {
     0%   { background-color: #fff; }
     49% { background-color: #fff; }
@@ -72,6 +74,8 @@
       -moz-animation:    argh-my-eyes 1s infinite;
       animation:         argh-my-eyes 1s infinite;
     }
+
+    /* Primary text */
     h1 {
       font-weight: bold;
       font-size: 1.75rem;
@@ -85,6 +89,7 @@
       font-size: 1.75rem;
     }
 
+    /* Secondary text */
     h4 {
  
       font-size: 1.75rem;
@@ -97,7 +102,6 @@
 
       font-size: 1.75rem;
     }
-
   </style>
 </head>
 <body>
@@ -126,11 +130,9 @@
         See: https://getbootstrap.com/docs/4.0/content/typography/
         -->
 
-  
         <h1 id="timeSpanMain">00:00 - 00:00</h1>
         <h2 id="currentDJ">Current DJ Name</h1>
         <h3 id="timeLeftMinutes">X min left</h1>
-
         
         <hr class="my-4"> 
 
@@ -156,7 +158,6 @@
           <br><br>
           <!-- REMOVE SPACE, USE CSS -->
 
-
           <h4 id="timeSpanSecondary">00:00 - 00:00</h4>
           <h5 id="nextDJ">Next DJ Name</h5><br>
           <h6 class="lead" id="motd"></h6>
@@ -179,24 +180,24 @@
     </div>
   </main>
 
-<footer class="footer">
-  <div class="container">
-    <span class="text-muted"><b>Message from Members: </b>Don't forget to have fun <3</span>
-  </div>
-</footer>
+  <footer class="footer">
+    <div class="container">
+      <span class="text-muted"><b>Message from Members: </b>Don't forget to have fun <3</span>
+    </div>
+  </footer>
 
-<!-- DEV -->
+  <!-- DEV -->
 
-<!--
-DEV TIME TOOLS
-<form>
-  Time: <input type="time" name="time"><br>
-  Past midnight: <input type="checkbox" name="midnight"><br>
-  <br><input type="submit"> 
-</form>
--->
+  <!--
+  DEV TIME TOOLS
+  <form>
+    Time: <input type="time" name="time"><br>
+    Past midnight: <input type="checkbox" name="midnight"><br>
+    <br><input type="submit"> 
+  </form>
+  -->
 
-<!-- DEV -->
+  <!-- DEV -->
 
 <?php
 function echoTimes($currentTime,$currentTimeId){
@@ -336,16 +337,19 @@ function getDJs(){
 }
 
 function getActiveDJs($djs){
+  /**
+  * Goes trought all avaible DJs.
+  * Filters out DJs, based on the current time.
+  *
+  * @return array Current DJ, Next DJ, and Upcoming DJ(s)
+  */
 
-  //global $currentDate;
+
   global $currentTime;
-
-  $djFound = false; // OLD
 
   $currentDJ_bool = false;
   $nextDJ_bool = false;
   $upcomningDJ_bool = false;
-
   
   $currentDJ = array();
   $nextDJ = array();
@@ -353,40 +357,36 @@ function getActiveDJs($djs){
 
 
   $currentTimeUnix = $currentTime->getTimestamp();
-
-
-
-
-  // $date->setTimezone(new DateTimeZone('Europe/Stockholm'));
-
-  // CURRENT TIME: 02:14
-  // 01:50-02:15Lisa & Gustaf
-  // 02:15-02:40: bajs och bajs 
+  // If error occures, change timezone 
+  // $currentTimeUnix->setTimezone(new DateTimeZone('Europe/Stockholm'));
 
   foreach($djs as $dj) {
 
-    // CHECK DATE
-    //echo "WORLD CLOCK: ". $currentTime->format("Y-m-d")."<br>";
-    //echo "DJ CLOCK:" . $dj["date"] ."<br>" ;
-
+    /* === DEV ===
+    if (($currentDJ_bool == true) && ($dj["startTimeUnix"]>$currentTimeUnix)){
+      $currentDJ_bool = true;
+      $dj["name"] = "VENUE NOT OPEN";
+      $dj["startTime"] = "00:00";
+      $dj["endTime"] = "00:00";
+      $currentDJ = $dj;
+    }
+    */
 
     if ($dj["endTimeUnix"]<$currentTimeUnix){
       continue;
     }
 
-    // WRONG - Should be ok now???
-    /*
+    /* WRONG!? - Should be ok now???
     if ($dj["endTimeUnix"]<$currentTimeUnix){
       continue;
     }
     */
-    // WRONG
-
 
     if ($currentDJ_bool == false){
       $currentDJ_bool = true;
 
-      echo "FOO: " . $currentTimeUnix . "<br>";
+      // This might be wrong...
+      // Errors might occure if it's around midnight
       $timeElapse =  intval($currentTimeUnix) - intval($dj["startTimeUnix"]);
       $timeRemain = intval($dj["endTimeUnix"]) - intval($currentTimeUnix);
 
@@ -398,10 +398,8 @@ function getActiveDJs($djs){
       }
 
       $timeTotal = $timeElapse + $timeRemain;
-  
-      // echo $dj["name"] . ": ".$dj["startTime"] . " - " . $dj["endTime"] . '<br>';
-
       
+      // Append times
       $dj["timeElapse"] = $timeElapse;
       $dj["timeRemain"] = $timeRemain;
       $dj["timeRemainMinutes"] = $timeRemainMinutes;
@@ -416,17 +414,20 @@ function getActiveDJs($djs){
       array_push($upcomningDJs,$dj);
     }
   }
+
   $activeDjs =  array(
           "currentDJ" => $currentDJ,
           "nextDJ" => $nextDJ,
           "upcomingDJs" => $upcomningDJs,
         );
+
   return $activeDjs;
 
 }
 
 function formatUnixInteger($unixTime){
   $time = new DateTime();
+  // N.B. Might cause problems with timezones
   $time->setTimestamp($unixTime);
   $time = $time->format("H:i");
   return $time;
@@ -452,12 +453,14 @@ function main($currentTime){
   */ 
 
 
-  $djs = getDJs();
-  $activeDJs = getActiveDJs($djs);
+  $djs = getDJs(); // All DJs
+  $activeDJs = getActiveDJs($djs); // Active DJs, based on the current time
+
   $currentDJ = $activeDJs["currentDJ"];
   $nextDJ = $activeDJs["nextDJ"];
   $upcomingDJs = $activeDJs["upcomingDJs"];
 
+  // Check if there's no more DJs left
   if ($nextDJ["name"]==null){
     $nextDJ["name"] = "";
     $echoMOTD=false;
@@ -465,14 +468,12 @@ function main($currentTime){
     echoTimeSpan($nextDJ["startTime"],$nextDJ["endTime"],"timeSpanSecondary");
     $echoMOTD=true;
   }
-
-
   
+  // Displays time info
   $timeElapseUnix = $currentDJ["timeElapse"]; // INT
   $timeRemainUnix = $currentDJ["timeRemain"]; // INT
   $timeTotalUnix = $currentDJ["timeTotal"];
   
-
   $timeElapse = formatUnixInteger($timeElapseUnix);
   $timeRemain = formatUnixInteger($timeRemainUnix);
 
@@ -481,15 +482,17 @@ function main($currentTime){
   echoTimes(new DateTime($timeRemain.":00"),"remainingTime");
   echoTimeSpan($currentDJ["startTime"],$currentDJ["endTime"],"timeSpanMain");
   
-
+  // Displays current time progress
   echoProgress($timeElapseUnix,$timeTotalUnix,$echoMOTD);
 
-
+  // Displays how many minutes remain
   echo '<script>document.getElementById("timeLeftMinutes").innerHTML = "' . $currentDJ["timeRemainMinutes"] . ' min left" ;</script>';
 
+  // Displays current and next DJ names
   echo '<script>document.getElementById("currentDJ").innerHTML = "' . $currentDJ["name"] . '" ;</script>';
   echo '<script>document.getElementById("nextDJ").innerHTML = "' . $nextDJ["name"] . '" ;</script>';
 
+  // Displays upcoming DJ names
   $text = "";
   $i=0;
   $displayLimit = "5";
@@ -501,16 +504,19 @@ function main($currentTime){
       $text = $text . "...";
       break;
     }
-
   }
 
+  // Displays upcoming DJ names
   echo '<script>document.getElementById("upcomingDJs").innerHTML = "' . $text . '" ;</script>';
+
 }
 
-
+// Set timezone
 date_default_timezone_set('UTC');
+// Set dev date
 $currentDate = "2019-10-21";
 
+// E.g. ?time=01%3A22&midnight=on
 if(!empty($_GET)){
   $devTime = $_GET["time"];
 
@@ -525,144 +531,22 @@ if(!empty($_GET)){
   $currentTime = new DateTime("now",new DateTimeZone('Europe/Stockholm'));
 }
 
-//$currentTime = new DateTime($currentDate, DateTimeZone('Europe/Stockholm'));
 
-/*
+/* === DEV ===
 echo "<br>";
 echo "CURRENT TIME: ".$currentTime->format("H:i"). "<br>";
 echo "CURRENT DATE: ".$currentTime->format("Y-m-d"). "<br>";
 */
 
-main($currentTime);
-/*
+main($currentTime); // Friendly reminder: php -S localhost:9000
 
-// php -S localhost:9000
-
-
-$row = 1;
-$djs = array();
-if (($handle = fopen("times.csv", "r")) !== FALSE) {
-  while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-    //$currentTime = new DateTime('2019-10-18');
-    //$currentTime->setTime(14, 55, 24);
-
-
-    $currentDate = "2019-10-20";
-
-
-
-  	$name = $data[0];
-    $currentHour = substr($data[1],0,2);
-
-  
-
-    $openingHour = "22";
-    $closingHour = "03";
-
-    if (is_numeric($currentHour) !== True) {
-       continue;
-    }
-
-    if ($currentHour < $closingHour){
-      $currentDate = date('Y-m-d', strtotime($currentDate . ' + 1 days'));
-    }
-
-
-
-    $start = strtotime($currentDate . " " . $data[1] . ":00");
-    $end = strtotime($currentDate . " " . $data[2] . ":00");
-
-  	//array_push($names,array($name,$data[1],$start,$data[2],$end));
-    array_push($djs,$array = array(
-      "name" => $name,
-      "startTime" => $data[1],
-      "startTimeUnix" => $start,
-      "endTime" => $data[2],
-      "endTimeUnix" => $end,
-      )
-    );
-
-
-
-  }
-  fclose($handle);
-}
-
-
-
-
-
-$currentDate = "2019-10-21";
-//$currentTime = new DateTime("now", new DateTimeZone('Europe/Stockholm') );
-
-$currentTime = new DateTime($currentDate . "00:25:00");
-
-
-$openingTime = new DateTime($currentDate . "22:00:00");
-$closingTime = new DateTime($currentDate . "02:45:00");
-
-$currentTimeUnix = $currentTime->getTimestamp();
-
-
-// DEV
-echo "CURRENT TIME: " . $currentTime->format("H:i");
-echo "<br>";
-echo "CURRENT UNIX: " . $currentTimeUnix;
-echo "<br>"."<br>";
-// DEV
-
-$djFound = false;
-$djsRemain = array();
-
-foreach($djs as $dj) {
-    // echo $name[1], '<br>'; // NAMES
-    //echo "DJ: " . $dj["startTimeUnix"], '<br>';
-    //echo "CURRENT: " . $currentCompare, '<br>';
-    if ($dj["endTimeUnix"]<$currentTimeUnix){
-      continue;
-    }
-    //echo "OK";
-
-    if ($djFound == false){
-      $timeElapse =  intval($currentTimeUnix) - intval($dj["startTimeUnix"]);
-      $timeRemain = intval($dj["endTimeUnix"]) - intval($currentTimeUnix);
-      $timeTotal = $timeElapse + $timeRemain;
-
-      echo "timeElapsed: " . date("H:i",$timeElapse);
-      echo "<br>";
-      echo "timeRemaining: " . date("H:i",$timeRemain);
-      echo "<br>";
-      echo "TOTAL TIME: " . date("H:i",$timeTotal);
-      echo "<br>";
-      echo '<progress id="djTime" max="' .  $timeTotal . '" value="' . $timeElapse . '"></progress>';
-      
-      echo "<br>";
-      echo "<br>";
-
-      echo $dj["name"] . ": ".$dj["startTime"] . " - " . $dj["endTime"] . '<br>';
-
-      
-
-      $djFound = true;
-
-    } else {
-        array_push($djsRemain,$dj);
-    }
-}
-
-foreach($djsRemain as $dj){
-  echo "";
-  // echo $dj["name"] .  '<br>';
-}
-
-*/
 ?>
 
-  <!-- CDNs -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</body>
+    <!-- CDNs -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
 </html>
 
 
