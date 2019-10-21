@@ -115,6 +115,10 @@ $sec = "10";
 
       font-size: 1.75rem;
     }
+
+    .container{
+      max-width: 95%; 
+    }
   </style>
 </head>
 <body>
