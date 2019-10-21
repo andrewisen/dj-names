@@ -351,7 +351,12 @@ function getActiveDJs($djs){
   $nextDJ = array();
   $upcomningDJs = array();
 
+
   $currentTimeUnix = $currentTime->getTimestamp();
+
+
+
+
   // $date->setTimezone(new DateTimeZone('Europe/Stockholm'));
 
   // CURRENT TIME: 02:14
@@ -381,6 +386,7 @@ function getActiveDJs($djs){
     if ($currentDJ_bool == false){
       $currentDJ_bool = true;
 
+      echo "FOO: " . $currentTimeUnix . "<br>";
       $timeElapse =  intval($currentTimeUnix) - intval($dj["startTimeUnix"]);
       $timeRemain = intval($dj["endTimeUnix"]) - intval($currentTimeUnix);
 
@@ -445,6 +451,7 @@ function main($currentTime){
   * @param object $currentTime 
   */ 
 
+
   $djs = getDJs();
   $activeDJs = getActiveDJs($djs);
   $currentDJ = $activeDJs["currentDJ"];
@@ -501,7 +508,7 @@ function main($currentTime){
 }
 
 
-
+date_default_timezone_set('UTC');
 $currentDate = "2019-10-21";
 
 if(!empty($_GET)){
@@ -515,8 +522,10 @@ if(!empty($_GET)){
     $currentTime = new DateTime($currentDate . $_GET["time"].":00");
   }
 } else {
-  $currentTime = new DateTime($currentDate . "22:13:00");
+  $currentTime = new DateTime("now",new DateTimeZone('Europe/Stockholm'));
 }
+
+//$currentTime = new DateTime($currentDate, DateTimeZone('Europe/Stockholm'));
 
 /*
 echo "<br>";
