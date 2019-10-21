@@ -1,5 +1,7 @@
 <?php
-$page = $_SERVER['PHP_SELF'];
+$page = $_SERVER['PHP_SELF'] . $_SERVER['REQUEST_URI'];
+$page =$_SERVER['REQUEST_URI'];
+
 $sec = "10";
 ?>
 
@@ -548,7 +550,6 @@ if(!empty($_GET)){
 
   if ($_GET['midnight'] == 'on'){
     $nextDay = date('Y-m-d', strtotime($currentDate . ' + 1 days'));
-    echo "MIDNIGHT" . "<br>";
     $currentTime = new DateTime($nextDay . $_GET["time"].":00");
   } else {
     $currentTime = new DateTime($currentDate . $_GET["time"].":00");
