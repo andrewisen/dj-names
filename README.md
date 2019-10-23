@@ -11,6 +11,10 @@ Use parameters `time` and/or `midnight` to enter developer mode.
 
 E.g. `?time=01%3A22&midnight=on` [(Link)](https://github.andrewisen.se/dj-names/index.php?time=01%3A22&midnight=on "Demo site")
 
+## Running on Rasp
+Via SSH
+`DISPLAY=:0 chromium-browser --start-fullscreen http://github.andrewisen.se/dj-names/`
+
 ## Screenshots
 ![Screenshot 00](/screenshots/screenshot-00.png?raw=true)
 
